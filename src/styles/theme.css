@@ -1,0 +1,791 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+
+:root {
+  --bg-start: #d4e9ff;    /* Azul clarito pastel */
+  --bg-end: #fff9e6;      /* Amarillo clarito pastel */
+  --panel: rgba(255, 255, 255, 0.7);
+  --panel-light: rgba(255, 255, 255, 0.5);
+  --line: rgba(180, 210, 240, 0.5);
+  --text: #3a5a7a;
+  --text-dim: #7a9abf;
+  --mint: #8fcbff;
+  --cream: #fffbe6;
+  --rust: #ffd966;
+  --shadow: rgba(180, 200, 255, 0.3);
+  --glow: rgba(255, 230, 150, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  background-attachment: fixed;
+}
+
+.page {
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(143, 203, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(255, 217, 102, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(255, 235, 200, 0.1) 0%, transparent 40%);
+  color: var(--text);
+  font-family: "Space Mono", monospace;
+  padding: 28px 18px 60px;
+  backdrop-filter: blur(0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- header ---------- */
+
+.site-head {
+  max-width: 880px;
+  margin: 0 auto 22px;
+  text-align: center;
+  position: relative;
+}
+
+.site-head__eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.3);
+  padding: 4px 12px;
+  display: inline-block;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.site-head__title {
+  font-family: "Dancing Script", cursive;
+  font-size: 72px;            /* Aumentamos un poco para darle presencia */
+  font-weight: 700;           /* Negrita para que resalte */
+  line-height: 1.2;
+  background: linear-gradient(135deg, #f9a8a8 0%, #0d0e4b 50%, #8fcbff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 8px 0 4px;
+  letter-spacing: 0.02em;     /* Menos espaciado para un flujo más orgánico */
+  text-shadow: 
+    0 4px 20px rgba(255, 200, 150, 0.3),   /* Sombra cálida difusa */
+    0 0 40px rgba(143, 203, 255, 0.15);     /* Resplandor azulado */
+  position: relative;
+  transform: rotate(-0.5deg);  /* Pequeña inclinación para efecto "escrito a mano" */
+  transition: all 0.3s ease;
+}
+
+/* Efecto sutil al pasar el ratón (opcional) */
+.site-head__title:hover {
+  transform: rotate(0deg) scale(1.02);
+  text-shadow: 0 8px 30px rgba(255, 200, 150, 0.5), 0 0 60px rgba(143, 203, 255, 0.25);
+}
+
+
+.site-head__title::after {
+  content: '✦';
+  position: absolute;
+  font-size: 28px;
+  -webkit-text-fill-color: initial;
+  color: #fcd34d;
+  right: -40px;
+  top: 2px;
+  opacity: 0.6;
+  transform: rotate(10deg);
+}
+
+.site-head__sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  backdrop-filter: blur(5px);
+}
+
+/* ---------- tabs ---------- */
+
+.tabs {
+  max-width: 880px;
+  margin: 22px auto 18px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tab-btn {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 9px 18px;
+  cursor: pointer;
+  position: relative;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(143, 203, 255, 0.2);
+}
+
+.tab-btn:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+
+.tab-btn--active {
+  background: linear-gradient(135deg, #8fcbff 0%, #ffd966 100%);
+  color: #2a4a6a;
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(143, 203, 255, 0.3);
+}
+
+/* ---------- grid layout ---------- */
+
+.grid {
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.span-2 {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .span-2 {
+    grid-column: 1;
+  }
+  .site-head__title {
+    font-size: 44px;
+  }
+  .site-head__title::after {
+    display: none;
+  }
+}
+
+/* ---------- window chrome ---------- */
+
+.window {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(143, 203, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.window:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 40px rgba(143, 203, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.window--cream {
+  background: rgba(255, 251, 230, 0.6);
+  backdrop-filter: blur(20px);
+  color: #2a4a6a;
+}
+
+.window--rust {
+  background: rgba(255, 217, 102, 0.2);
+  backdrop-filter: blur(20px);
+}
+
+.win-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px 16px 0 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.win-bar--cream {
+  border-bottom-color: rgba(255, 215, 150, 0.2);
+  background: rgba(255, 251, 230, 0.2);
+}
+
+.win-bar__dots {
+  display: flex;
+  gap: 6px;
+}
+
+.win-bar__dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.win-bar__dots i:nth-child(1) { background: #ffb3b3; }
+.win-bar__dots i:nth-child(2) { background: #ffd966; }
+.win-bar__dots i:nth-child(3) { background: #8fcbff; }
+
+.win-bar__name {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  flex: 1;
+}
+
+.win-bar--cream .win-bar__name {
+  color: #5b7a9a;
+}
+
+.win-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-dim);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  width: 22px;
+  height: 20px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.win-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.win-btn:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 1px;
+}
+
+.window__body {
+  padding: 18px;
+}
+
+/* ---------- presentation tab ---------- */
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #8fcbff 0%, #ffd966 100%);
+  color: #2a4a6a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  flex-shrink: 0;
+  font-size: 24px;
+  box-shadow: 0 4px 15px rgba(143, 203, 255, 0.2);
+}
+
+.alias {
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  margin: 0;
+  background: linear-gradient(135deg, #5b9bd5 0%, #ffd966 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.handle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.meta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.meta-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px dashed rgba(143, 203, 255, 0.2);
+  font-size: 12px;
+}
+
+.meta-list li:last-child {
+  border-bottom: none;
+}
+
+.meta-list__k {
+  color: var(--text-dim);
+  text-transform: lowercase;
+}
+
+.meta-list__v {
+  color: var(--text);
+}
+
+.bio-text {
+  font-size: 13.5px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.link-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 12px;
+  color: var(--text);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.link-row:hover,
+.link-row:focus-visible {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
+  box-shadow: 0 4px 15px rgba(143, 203, 255, 0.1);
+}
+
+.link-row:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+
+.link-row__label {
+  color: var(--text-dim);
+  text-transform: lowercase;
+}
+
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.friend-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.friend-chip__emoji {
+  font-size: 16px;
+}
+
+/* ---------- tags ---------- */
+
+.tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid currentColor;
+  display: inline-block;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  transform: scale(1.05);
+}
+
+.tag--original {
+  color: #8fcbff;
+  background: rgba(143, 203, 255, 0.1);
+}
+
+.tag--fanart {
+  color: #ffb3b3;
+  background: rgba(255, 179, 179, 0.1);
+}
+
+.tag--oc {
+  color: #ffd966;
+  background: rgba(255, 217, 102, 0.1);
+}
+
+.tag--sketch {
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ---------- gallery tab — corkboard of polaroids ---------- */
+
+.corkboard {
+  position: relative;
+  min-height: 760px;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(143, 203, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(255, 217, 102, 0.05) 0%, transparent 50%),
+    rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.polaroid {
+  position: absolute;
+  width: var(--w);
+  background: rgba(255, 251, 230, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 12px 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: #2a4a6a;
+  transform: rotate(var(--rotate));
+  box-shadow: 
+    0 8px 32px rgba(143, 203, 255, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.polaroid:hover,
+.polaroid:focus-visible {
+  transform: rotate(0deg) translateY(-6px) scale(1.02);
+  box-shadow: 
+    0 12px 48px rgba(143, 203, 255, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 50 !important;
+}
+
+.polaroid:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+
+.polaroid__tape {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 50px;
+  height: 20px;
+  margin-left: -25px;
+  background: rgba(255, 251, 230, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: rotate(-3deg);
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+}
+
+.polaroid__photo {
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: 
+    linear-gradient(135deg, rgba(143, 203, 255, 0.1), rgba(255, 217, 102, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(42, 74, 106, 0.2);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.polaroid__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polaroid__moth {
+  width: 30%;
+  height: auto;
+}
+
+.polaroid__caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.polaroid__title {
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 640px) {
+  .corkboard {
+    min-height: 0;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .polaroid {
+    position: static;
+    width: 100% !important;
+    max-width: 280px;
+    transform: rotate(0deg) !important;
+  }
+  .polaroid:hover,
+  .polaroid:focus-visible {
+    transform: translateY(-2px) !important;
+  }
+}
+
+/* ---------- presentation tab layout: profile compacto + retrato al lado ---------- */
+
+.grid--presentation {
+  grid-template-columns: 1.15 fr 1.15 fr;
+}
+
+.profile-head--compact {
+  margin-bottom: 10px;
+}
+
+.alias--compact {
+  font-size: 22px;
+}
+
+.portrait-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 260px;
+  position: relative;
+}
+
+.portrait-slot__img {
+  max-width: 100%;
+  max-height: 260px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  /* sin fondo, sin marco — la imagen flota directo sobre el gradiente */
+  filter: drop-shadow(0 12px 28px rgba(143, 203, 255, 0.25));
+}
+
+.portrait-slot__placeholder {
+  width: 70px;
+  height: auto;
+  color: rgba(122, 154, 191, 0.35);
+}
+
+@media (max-width: 640px) {
+  .grid--presentation {
+    grid-template-columns: 1fr;
+  }
+  .portrait-slot {
+    min-height: 140px;
+    order: -1; /* la imagen aparece primero en mobile, antes del profile.cfg */
+  }
+}
+
+/* ---------- lightbox ---------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(180, 200, 240, 0.45);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.lightbox__panel {
+  background: rgba(255, 251, 230, 0.97);
+  backdrop-filter: blur(20px);
+  color: #2a4a6a;
+  max-width: 820px;
+  width: 92vw;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 20px 60px rgba(143, 203, 255, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+}
+
+.lightbox__body {
+  padding: 20px;
+}
+
+.lightbox__art {
+  aspect-ratio: 3 / 2;
+  max-height: 65vh;
+  background: 
+    linear-gradient(135deg, rgba(143, 203, 255, 0.1), rgba(255, 217, 102, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: rgba(42, 74, 106, 0.2);
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.lightbox__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lightbox__moth {
+  width: 40px;
+  height: 30px;
+}
+
+.lightbox__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lightbox__meta h3 {
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  margin: 0;
+  background: linear-gradient(135deg, #5b9bd5 0%, #ffd966 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* ---------- doodles: garabatos sueltos decorativos ---------- */
+
+.doodle-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.doodle-field__item {
+  position: absolute;
+  opacity: 0.55;
+}
+
+@media (max-width: 640px) {
+  /* en mobile reducimos ruido visual: menos doodles visibles */
+  .doodle-field__item:nth-child(n+3) {
+    display: none;
+  }
+}
+
+/* filtro sketchy-edge removido: distorsionaba el texto dentro de las
+   ventanas. Las ventanas se quedan con su borde normal (border-radius +
+   border simple), sin el temblor "dibujado a mano". */
+
+.lightbox__panel::before {
+  content: none;
+}
+
+/* ---------- corner-art: stickers/imagenes decorativas en esquina de ventana ---------- */
+
+.corner-art {
+  position: absolute;
+  bottom: -48px;
+  left: -18px;
+  width: 88px;
+  height: auto;
+  pointer-events: none;
+  z-index: 30;
+  filter: drop-shadow(0 4px 10px rgba(58, 90, 122, 0.25));
+}
+
+.corner-art--profile {
+  width: 76px;
+}
+
+.corner-art--bio {
+  width: 96px;
+  left: 320px;
+}
+
+.profile-window .window__body,
+.window--cream.span-2 .window__body {
+  padding-bottom: 36px;
+}
+
+@media (max-width: 640px) {
+  .corner-art {
+    position: absolute;
+    pointer-events: none;
+    z-index: 30;
+    filter: drop-shadow(0 4px 10px rgba(58, 90, 122, 0.25));
+  }
+
+  .corner-art--profile {
+    width: 60px;
+    bottom: -25px;
+    left: 6px;
+  }
+
+  .corner-art--bio {
+    width: 90px;
+    bottom: -40px;
+    left: auto;
+    right: 6px;
+  }
+
+  .profile-window {
+    position: relative;
+    z-index: 2;
+  }
+}
